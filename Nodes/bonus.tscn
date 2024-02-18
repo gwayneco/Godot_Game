@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmrgoxlsxmd1i"]
+
+[ext_resource type="Texture2D" uid="uid://bfn2uoumpiol" path="res://art/milk.png" id="1_d5sd1"]
+[ext_resource type="Script" path="res://Nodes/bonus.gd" id="1_w3t1g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hyq4o"]
+size = Vector2(20, 40)
+
+[node name="Bonus" type="RigidBody2D" groups=["bonus"]]
+collision_layer = 4
+collision_mask = 4
+mass = 0.01
+gravity_scale = 0.0
+script = ExtResource("1_w3t1g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visibility_layer = 3
+shape = SubResource("RectangleShape2D_hyq4o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d5sd1")

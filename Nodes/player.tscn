@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=3 uid="uid://cerodaf1s0q4m"]
+
+[ext_resource type="Script" path="res://Nodes/player.gd" id="1_s5yv8"]
+[ext_resource type="Texture2D" uid="uid://dd5niw2vow7aj" path="res://art/fatcatfly/1.png" id="2_mkpvk"]
+[ext_resource type="Texture2D" uid="uid://dvbix8bgybu1o" path="res://art/fatcatfly/2.png" id="3_m1hsm"]
+[ext_resource type="Texture2D" uid="uid://dr65271fkddj0" path="res://art/fatcatfly/3.png" id="4_0ujur"]
+[ext_resource type="Texture2D" uid="uid://btyevcmcggeid" path="res://art/fatcatfly/4.png" id="5_lnlvf"]
+[ext_resource type="Texture2D" uid="uid://c25l0utiaa22n" path="res://art/fatcatfly/5.png" id="6_iduab"]
+[ext_resource type="Texture2D" uid="uid://km8fbcekb5fq" path="res://art/fatcatfly/6.png" id="7_wu6ir"]
+[ext_resource type="Texture2D" uid="uid://dvkqvqeadhfj6" path="res://art/fatcatfly/7.png" id="8_lvvtf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6xd55"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mkpvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_m1hsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0ujur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lnlvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_iduab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wu6ir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_lvvtf")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_l8f7f"]
+script/source = "extends AnimatedSprite2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l4p8n"]
+radius = 25.0
+height = 70.0
+
+[node name="Player" type="Area2D"]
+position = Vector2(120, 99)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_s5yv8")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -1)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_6xd55")
+animation = &"fly"
+script = SubResource("GDScript_l8f7f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_l4p8n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
