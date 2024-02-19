@@ -4,6 +4,7 @@ signal bonus_pick_up
 
 @export var speed = 400
 var screen_size
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -36,10 +37,8 @@ func _process(delta):
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
-	if velocity.x != 0:
-		$AnimatedSprite2D.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$AnimatedSprite2D.flip_v = velocity.y > 0
+	look_at(global_position + velocity)
+
 
 
 func _on_body_entered(body):

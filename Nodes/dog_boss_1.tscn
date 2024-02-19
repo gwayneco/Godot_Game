@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://Nodes/dog_boss_1.gd" id="1_2xnlr"]
 [ext_resource type="Texture2D" uid="uid://dgntlgw62636v" path="res://art/DogBoss1/opemMouth2.png" id="1_j27um"]
+[ext_resource type="PackedScene" uid="uid://divds6u7vfyuc" path="res://Nodes/fire_ball.tscn" id="2_8wlul"]
 [ext_resource type="Texture2D" uid="uid://vybwa6j42w7o" path="res://art/DogBoss1/opemMouth3.png" id="2_81w8j"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_7yfov"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_eailj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -14,37 +15,32 @@ animations = [{
 "texture": ExtResource("2_81w8j")
 }],
 "loop": true,
-"name": &"Attack",
-"speed": 3.0
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j27um")
+}],
+"loop": true,
+"name": &"stay",
+"speed": 5.0
 }]
-
-[sub_resource type="Curve2D" id="Curve2D_wl0kh"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 128, 192, 0, 0, 0, 0, 576, 192)
-}
-point_count = 2
 
 [node name="DogBoss1" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_2xnlr")
+FireBallScene = ExtResource("2_8wlul")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 polygon = PackedVector2Array(24, 264, -24, 264, -24, 256, -72, 248, -88, 240, -88, 216, -96, 216, -96, 176, -112, 176, -112, 152, -120, 152, -120, 144, -128, 144, -128, 136, -136, 136, -136, 128, -144, 128, -144, 104, -152, 104, -160, 104, -160, 8, -168, 8, -168, -24, -168, -40, -184, -40, -184, -112, -168, -112, -168, -160, -152, -160, -152, -208, -144, -208, -144, -272, -136, -272, -136, -256, -120, -256, -120, -224, -104, -224, -104, -176, -96, -176, -96, -136, -80, -136, -80, -112, -48, -112, -48, -128, 48, -128, 48, -112, 88, -112, 88, -136, 96, -136, 96, -168, 112, -168, 112, -216, 120, -216, 120, -256, 136, -256, 136, -272, 144, -272, 144, -208, 160, -208, 160, -160, 168, -160, 168, -112, 184, -112, 184, -40, 168, -40, 168, 8, 160, 8, 160, 104, 144, 104, 144, 128, 136, 128, 136, 144, 128, 144, 120, 144, 120, 152, 112, 152, 112, 176, 96, 184, 96, 216, 88, 216, 80, 240, 72, 248, 72, 256, 24, 256)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
-sprite_frames = SubResource("SpriteFrames_7yfov")
-animation = &"Attack"
+rotation = -0.00309597
+sprite_frames = SubResource("SpriteFrames_eailj")
+animation = &"attack"
 
-[node name="StartPosOutScreen" type="Marker2D" parent="."]
-position = Vector2(384, -384)
+[node name="FireTimer" type="Timer" parent="."]
+autostart = true
 
-[node name="StartPosInScreen" type="Marker2D" parent="."]
-position = Vector2(384, 256)
-
-[node name="BossPath" type="Path2D" parent="."]
-curve = SubResource("Curve2D_wl0kh")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="BossPath"]
-position = Vector2(128, 192)
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]

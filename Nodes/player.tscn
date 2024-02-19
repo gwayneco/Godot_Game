@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cerodaf1s0q4m"]
+[gd_scene load_steps=11 format=3 uid="uid://cerodaf1s0q4m"]
 
 [ext_resource type="Script" path="res://Nodes/player.gd" id="1_s5yv8"]
 [ext_resource type="Texture2D" uid="uid://dd5niw2vow7aj" path="res://art/fatcatfly/1.png" id="2_mkpvk"]
@@ -38,25 +38,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="GDScript" id="GDScript_l8f7f"]
-script/source = "extends AnimatedSprite2D
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l4p8n"]
 radius = 25.0
 height = 70.0
 
 [node name="Player" type="Area2D"]
-position = Vector2(120, 99)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_s5yv8")
@@ -64,10 +50,10 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -1)
+rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_6xd55")
 animation = &"fly"
-script = SubResource("GDScript_l8f7f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0)

@@ -37,7 +37,7 @@ func new_game():
 func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.
 	var mob = mob_scene.instantiate()
-	
+
 	# Choose a random location on Path2D.
 	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
 	mob_spawn_location.progress_ratio = randf()
@@ -98,17 +98,17 @@ func _bonus_spawn_location(size_x, size_y):
 	return [position_bonux_x,position_bonux_y]
 	
 func _on_boss_timer_1_timeout():
-	print("BOSS")
 	_boss1_entired()
 	$BossTimer1.stop()
 
 func _boss1_entired():
-	print("12")
 	var Boss = Boss_scene.instantiate()
 	$Music.stop()
 	$BonusPickMusic.stop()
 	$BossMusic1.play()
 	$MobTimer.stop()
 	$SpawnBonusTimer.stop()
+	print("Add")
 	add_child(Boss)
+	print(Boss.position)
 
