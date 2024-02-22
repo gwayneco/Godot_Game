@@ -108,7 +108,5 @@ func _boss1_entired():
 	$BossMusic1.play()
 	$MobTimer.stop()
 	$SpawnBonusTimer.stop()
-	print("Add")
 	add_child(Boss)
-	print(Boss.position)
 

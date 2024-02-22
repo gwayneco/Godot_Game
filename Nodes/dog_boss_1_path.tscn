@@ -3,26 +3,22 @@
 [ext_resource type="Script" path="res://Nodes/PathFollow2D.gd" id="1_oka54"]
 [ext_resource type="PackedScene" uid="uid://ctghs8lm32yv3" path="res://Nodes/dog_boss_1.tscn" id="1_puqep"]
 
-[sub_resource type="Curve2D" id="Curve2D_fusr6"]
+[sub_resource type="Curve2D" id="Curve2D_7ugd5"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -840, 0, 0, 0, 0, 0, -535.017, -1.26007, 0, 0, 0, 0, 688, 0)
+"points": PackedVector2Array(0, 0, 0, 0, -768, 0, 0, 0, 0, 0, 768, 0)
 }
-point_count = 3
+point_count = 2
 
 [node name="DogBoss1Path" type="Path2D"]
-position = Vector2(1040, -640)
-curve = SubResource("Curve2D_fusr6")
+position = Vector2(960, 296)
+curve = SubResource("Curve2D_7ugd5")
 
-[node name="StartPosInScreen" type="Marker2D" parent="."]
-position = Vector2(-80, 0)
-rotation = -0.00413159
-
-[node name="PathFollow2D" type="PathFollow2D" parent="."]
-position = Vector2(-840, 0)
-rotation = -0.00413158
+[node name="BossPath" type="PathFollow2D" parent="."]
+position = Vector2(-768, 0)
 loop = false
 script = ExtResource("1_oka54")
-metadata/_edit_group_ = true
 
-[node name="DogBoss1" parent="PathFollow2D" instance=ExtResource("1_puqep")]
-position = Vector2(-6.10352e-05, 2.38419e-07)
+[node name="DogBoss1" parent="BossPath" instance=ExtResource("1_puqep")]
+position = Vector2(0, -768)
+
+[node name="StartPosInScreen" type="Marker2D" parent="BossPath"]
