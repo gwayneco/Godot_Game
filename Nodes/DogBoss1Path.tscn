@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/PathFollow2D.gd" type="Script" id=1]
+[ext_resource path="res://Nodes/DogBoss1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/FireBall.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 192, 352, 0, 0, 0, 0, 1728, 352 )
+}
+
+[node name="DogBoss1Path" type="Path2D"]
+position = Vector2( 0, -160 )
+curve = SubResource( 1 )
+
+[node name="BossPath" type="PathFollow2D" parent="."]
+position = Vector2( 192, 352 )
+script = ExtResource( 1 )
+FireBallScene = ExtResource( 3 )
+
+[node name="DogBoss1" parent="BossPath" instance=ExtResource( 2 )]
+position = Vector2( 0, -728 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="BossPath/DogBoss1"]
+position = Vector2( 0, 192 )
+
+[node name="DirectionChangeTimer" type="Timer" parent="BossPath"]
+
+[node name="FireTimer" type="Timer" parent="BossPath"]
+
+[node name="Marker2D" type="Position2D" parent="BossPath"]
+
+[node name="OutScreenDied" type="Position2D" parent="BossPath"]
+position = Vector2( 0, -728 )
+
+[node name="BossDieSound" type="AudioStreamPlayer2D" parent="BossPath"]
+position = Vector2( -384, -568 )
+
+[connection signal="boss_died" from="BossPath" to="BossPath/DogBoss1" method="_on_BossPath_boss_died"]
+[connection signal="timeout" from="BossPath/DirectionChangeTimer" to="BossPath" method="_on_DirectionChangeTimer_timeout"]
+[connection signal="timeout" from="BossPath/FireTimer" to="BossPath" method="_on_FireTimer_timeout"]

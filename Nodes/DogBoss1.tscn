@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://art/DogBoss1/DamageAnimation/opemMouth4.png" type="Texture" id=1]
+[ext_resource path="res://art/DogBoss1/DamageAnimation/opemMouth5.png" type="Texture" id=2]
+[ext_resource path="res://art/DogBoss1/DamageAnimation/opemMouth3.png" type="Texture" id=3]
+[ext_resource path="res://art/DogBoss1/DamageAnimation/opemMouth6.png" type="Texture" id=4]
+[ext_resource path="res://art/DogBoss1/opemMouth2.png" type="Texture" id=5]
+[ext_resource path="res://art/DogBoss1/opemMouth3.png" type="Texture" id=6]
+[ext_resource path="res://art/DogBoss1/DamageAnimation/opemMouth2.png" type="Texture" id=7]
+[ext_resource path="res://Scripts/dog_boss_1.gd" type="Script" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "attack",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "damage",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "die",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "stay",
+"speed": 5.0
+} ]
+
+[node name="DogBoss1" type="KinematicBody2D" groups=["mobs"]]
+collision_layer = 4
+script = ExtResource( 8 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 17, 185, 23, 179, 51, 177, 52, 170, 61, 167, 60, 152, 67, 151, 68, 127, 77, 128, 77, 109, 101, 92, 111, 73, 111, 8, 119, 8, 120, -26, 126, -28, 127, -75, 118, -108, 109, -144, 102, -186, 88, -178, 78, -151, 68, -118, 62, -93, 60, -78, 35, -77, 34, -84, -34, -84, -33, -78, -57, -78, -59, -91, -68, -117, -77, -152, -85, -177, -100, -184, -108, -145, -117, -109, -126, -76, -125, -28, -119, 6, -112, 8, -110, 74, -102, 75, -102, 91, -94, 94, -93, 99, -84, 101, -85, 107, -76, 109, -77, 124, -69, 128, -67, 149, -59, 153, -60, 168, -51, 169, -51, 176, -17, 177, -16, 186 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "stay"
