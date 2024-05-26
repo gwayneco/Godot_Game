@@ -17,14 +17,14 @@ animations = [ {
 "speed": 3.0
 }, {
 "frames": [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
-"loop": true,
+"loop": false,
 "name": "damage",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "die",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
@@ -42,3 +42,5 @@ polygon = PoolVector2Array( 17, 185, 23, 179, 51, 177, 52, 170, 61, 167, 60, 152
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "stay"
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_animated_sprite_2d_animation_finished"]

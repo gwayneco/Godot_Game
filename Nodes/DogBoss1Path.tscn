@@ -36,6 +36,6 @@ position = Vector2( 0, -728 )
 [node name="BossDieSound" type="AudioStreamPlayer2D" parent="BossPath"]
 position = Vector2( -384, -568 )
 
-[connection signal="boss_died" from="BossPath" to="BossPath/DogBoss1" method="_on_BossPath_boss_died"]
+[connection signal="screen_exited" from="BossPath/DogBoss1/VisibilityNotifier2D" to="BossPath" method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="BossPath/DirectionChangeTimer" to="BossPath" method="_on_DirectionChangeTimer_timeout"]
 [connection signal="timeout" from="BossPath/FireTimer" to="BossPath" method="_on_FireTimer_timeout"]

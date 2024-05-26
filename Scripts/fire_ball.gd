@@ -9,8 +9,8 @@ var direction
 func start(pos):
 	#direction += randf_range(-PI / 4, PI / 4)
 	position = pos
-	velocity = position.direction_to(GlobalVar.PlayerPosition) * speed
-	rotation = get_angle_to(GlobalVar.PlayerPosition)
+#	velocity = position.direction_to(GlobalVar.PlayerPosition) * speed
+#	rotation = get_angle_to(GlobalVar.PlayerPosition)
 
 
 func _physics_process(delta):

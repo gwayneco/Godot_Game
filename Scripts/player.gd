@@ -1,7 +1,9 @@
 extends Area2D
+
 signal hit
 signal bonus_pick_up
 signal dog_damage
+signal coin_up
 
 var speed = 600
 var screen_size
@@ -31,16 +33,11 @@ func _process(delta):
 
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
-		#$AnimatedSprite2D.play()
-	#else:
-		#$AnimatedSprite2D.stop()
 
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 	look_at(global_position + velocity)
-
-
 
 func _on_body_entered(body):
 	if body.is_in_group("mobs"):
@@ -52,3 +49,6 @@ func _on_body_entered(body):
 		emit_signal("bonus_pick_up")
 	elif body.is_in_group("dog_damage"):
 		emit_signal("dog_damage")
+	elif body.is_in_group("coin"):
+		body.queue_free()
+		emit_signal("coin_up")

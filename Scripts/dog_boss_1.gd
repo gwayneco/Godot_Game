@@ -2,8 +2,7 @@ extends KinematicBody2D
 
 var velocity = Vector2.ZERO
 signal BossEntered
-var FlagBossIsOn = 1
-
+var FlagBossDie = 1
 var t = 0.0
 var x = 0
 var target
@@ -25,9 +24,10 @@ func _damage():
 	$AnimatedSprite.play("damage") 
 
 func _on_animated_sprite_2d_animation_finished():
-	$AnimatedSprite.play("attack")
-
+	if (FlagBossDie):
+		$AnimatedSprite.play("attack")
 
 func _on_BossPath_boss_died():
+	FlagBossDie = 0
 	$AnimatedSprite.stop()
 	$AnimatedSprite.play("die")

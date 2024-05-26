@@ -2,26 +2,37 @@ extends Node
 
 export var mob_scene: PackedScene
 export var bonus_scene: PackedScene
-export var Boss_scene: PackedScene
+export var Boss_scene1: PackedScene
+export var Boss_scene2: PackedScene
 export var lapka_scene: PackedScene
+export var coin_scene: PackedScene
 
 var Boss
 var score
 var flag = 1
 
 func _ready():
+	#print(OS.get_screen_size())
+	
 	$Player.hide()
+	Signals.connect("boss1_died", self, "_resume_game_after_boss")
+
 
 func _process(delta):
 	GlobalVar.PlayerPosition = $Player.position
+	
 
 func game_over():
-	$ScoreTimer.stop()
+	$SpeedSpawnMobsTimer.stop()
 	$MobTimer.stop()
 	$SpawnBonusTimer.stop()
 	$HUD.show_game_over()
 	$Music.stop()
 	$DeathSound.play()
+	$BossMusic1.stop()
+	$LapkaDamageBossTimer.stop()
+	$BossTimer1.stop()
+	$BossTimer2.stop()
 	
 func new_game():
 	get_tree().call_group("mobs", "queue_free")
@@ -31,9 +42,13 @@ func new_game():
 	$HUD.update_score(score)
 	$Music.play()
 	$MobTimer.start()
-	$ScoreTimer.start()
+	$SpeedSpawnMobsTimer.start()
 	$SpawnBonusTimer.start()
+	$CoinTimer.start()
 	$MobTimer.wait_time = 2
+	
+	# Здесь, как тест, потом перенести в функцию вознаграждения после убийства босса1 _on_AfterBossCoinStorm_timeout
+	$BossTimer2.start()
 	
 
 func _on_mob_timer_timeout():
@@ -45,7 +60,7 @@ func _on_mob_timer_timeout():
 	mob_spawn_location.unit_offset = randf()
 	#print(mob_spawn_location.global_position)
 	var direction = mob_spawn_location.rotation + PI / 2
-
+	randomize()
 	direction += rand_range(-PI / 4, PI / 4)
 	GlobalVar.mob_spawn_location_position = mob_spawn_location.global_position
 	GlobalVar.mob_direction = direction
@@ -55,6 +70,7 @@ func _on_mob_timer_timeout():
 func _on_bonus_spawn_timer_timeout():
 	var bonus = bonus_scene.instance()
 	var bonus_spawn_location = get_node("MobPath/MobSpawnLocation")
+	randomize()
 	bonus_spawn_location.unit_offset = randf()
 	var direction = bonus_spawn_location.rotation + PI / 2
 	direction += rand_range(-PI / 4, PI / 4)
@@ -64,13 +80,11 @@ func _on_bonus_spawn_timer_timeout():
 	bonus.linear_velocity = velocity.rotated(direction)
 	add_child(bonus)
 
+# SpeedSpawnMobsTimer ускорение появления астероидов
 func _on_score_timer_timeout():
-	score += 1
-	$HUD.update_score(score)
-	
+	#print($MobTimer.wait_time)
 	# Ускорение появления врагов
-	if (score != 0.05 and score % 2 == 0):
-		$MobTimer.wait_time -= 0.05
+	$MobTimer.wait_time -= 0.1
 
 func _on_player_bonus_pick_up():
 	get_tree().call_group("bonus", "queue_free")
@@ -98,7 +112,7 @@ func _on_boss_timer_1_timeout():
 	$BossTimer1.stop()
 
 func _boss1_entired():
-	Boss = Boss_scene.instance()
+	Boss = Boss_scene1.instance()
 	$Music.stop()
 	$BonusPickMusic.stop()
 	$BossMusic1.play()
@@ -106,6 +120,22 @@ func _boss1_entired():
 	$SpawnBonusTimer.stop()
 	add_child(Boss)
 	$LapkaDamageBossTimer.start()
+	$CoinTimer.stop()
+	
+func _on_BossTimer2_timeout():
+	_boss2_entired()
+	$BossTimer2.stop()
+	
+func _boss2_entired():
+	Boss = Boss_scene2.instance()
+	$Music.stop()
+	$BonusPickMusic.stop()
+	$BossMusic1.play()
+	$MobTimer.stop()
+	$SpawnBonusTimer.stop()
+	add_child(Boss)
+	$LapkaDamageBossTimer.start()
+	$CoinTimer.stop()
 	
 	
 func _on_player_dog_damage():
@@ -129,5 +159,42 @@ func _on_lapka_damage_boss_timer_timeout():
 	lapka.linear_velocity = velocity.rotated(direction)
 	add_child(lapka)
 
-func _observer():
-	pass
+# Функция для продолжения игры, после убийства босса
+func _resume_game_after_boss():
+	$Music.play()
+	$AfterBossCoinStorm.start()
+	$CoinTimer.start()
+	$MobTimer.wait_time = 1.5
+	$CoinTimer.wait_time = 0.1
+
+
+func _on_CoinTimer_timeout():
+	var coin = coin_scene.instance()
+	var coin_spawn_location = get_node("MobPath/MobSpawnLocation")
+	randomize()
+	coin_spawn_location.unit_offset = randf()
+	var direction = coin_spawn_location.rotation + PI / 2
+	direction += rand_range(-PI / 4, PI / 4)
+	coin.position = coin_spawn_location.global_position
+	coin.rotation = direction
+	var velocity = Vector2(rand_range(150.0, 250.0), 0.0)
+	coin.linear_velocity = velocity.rotated(direction)
+	add_child(coin)
+
+
+func _on_Player_coin_up():
+	$CoinSound.play()
+	score += 1
+	$HUD.update_score(score)
+	
+	
+# Поток монет после смерти босса
+func _on_AfterBossCoinStorm_timeout():
+	$SpeedSpawnMobsTimer.start()
+	$SpawnBonusTimer.start()
+	$MobTimer.start()
+	$CoinTimer.wait_time = 2
+	#$BossTimer2.start()
+
+
+
