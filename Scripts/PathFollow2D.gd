@@ -46,8 +46,8 @@ func _Path2dFollowBoss(direction):
 			direction *= -1
 	return direction
 
-func _on_dog_boss_1_boss_entered():
-	BossEnteredFlas = 1
+#func _on_dog_boss_1_boss_entered():
+#	BossEnteredFlas = 1
 
 
 func _on_DirectionChangeTimer_timeout():
@@ -64,6 +64,7 @@ func _on_FireTimer_timeout():
 	FireBall.rotation = get_angle_to(GlobalVar.PlayerPosition)
 	if ($FireTimer.wait_time > 0.5):
 		$FireTimer.wait_time -= 0.01
+	$FireBallSound.play()
 	
 #Функция при смерти босса, вызывается при достижении его жизней = 0
 func _boss_died():
@@ -71,10 +72,9 @@ func _boss_died():
 	$FireTimer.stop()
 	if ($DogBoss1.position.y > $OutScreenDied.position.y):
 		$DogBoss1.velocity = $DogBoss1.position.direction_to($OutScreenDied.position) * speed
-	$BossDieSound.play()
 
 
 func _on_VisibilityNotifier2D_screen_exited():
 	if (BossDieFlag == 0):
 		Signals.emit_signal("boss1_died")
-		$DogBoss1.queue_free()
+		queue_free()

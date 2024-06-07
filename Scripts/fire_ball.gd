@@ -7,6 +7,7 @@ var test = Vector2.ZERO
 var direction
 # Called when the node enters the scene tree for the first time.
 func start(pos):
+	$AnimatedSprite.play("Fly")
 	#direction += randf_range(-PI / 4, PI / 4)
 	position = pos
 #	velocity = position.direction_to(GlobalVar.PlayerPosition) * speed
@@ -15,6 +16,6 @@ func start(pos):
 
 func _physics_process(delta):
 	move_and_slide(velocity)
-	
-func _on_visible_on_screen_notifier_2d_screen_exited():
+
+func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

@@ -7,7 +7,7 @@
 radius = 42.0
 height = 0.0
 
-[node name="Lapka" type="RigidBody2D" groups=["dog_damage"]]
+[node name="Lapka" type="RigidBody2D" groups=["dog_damage", "service"]]
 collision_layer = 16
 gravity_scale = 0.0
 script = ExtResource( 2 )
