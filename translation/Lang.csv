@@ -1,0 +1,9 @@
+﻿id,ru,en
+StartButton,Старт,Start
+Instruction,Инструкция и управление,Instructions and controls
+Instruction1,Уворачивайся от астероидов,Dodge the asteroids
+Instruction2,Собирай монетки и зарабатывай очки,Collect coins and earn points
+Instruction3,Сражайся с боссами,Fight the bosses
+Instruction4,Наноси урон,Deals damage
+GameOver,Вы проиграли,Game Over
+Pause,Игра на паузе,The game is on pause

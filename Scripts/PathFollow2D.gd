@@ -25,7 +25,6 @@ func _boss_movement():
 	if ($DogBoss1.is_inside_tree()):
 		if ($DogBoss1.position.y < $Marker2D.position.y and BossEnteredFlas):
 			$DogBoss1.velocity = $DogBoss1.position.direction_to($Marker2D.position) * speed
-		
 		elif (BossEnteredFlas):
 			$FireTimer.start()
 			$DogBoss1.velocity = Vector2.ZERO
@@ -45,9 +44,6 @@ func _Path2dFollowBoss(direction):
 		if (unit_offset <= 0.01):
 			direction *= -1
 	return direction
-
-#func _on_dog_boss_1_boss_entered():
-#	BossEnteredFlas = 1
 
 
 func _on_DirectionChangeTimer_timeout():

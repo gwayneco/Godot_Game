@@ -26,6 +26,7 @@ func game_over():
 	get_tree().call_group("service", "queue_free")
 	get_tree().call_group("mobs", "queue_free")
 	get_tree().call_group("coin", "queue_free")
+	get_tree().call_group("bonus", "queue_free")
 	$SpeedSpawnMobsTimer.stop()
 	$MobTimer.stop()
 	$SpawnBonusTimer.stop()
@@ -114,6 +115,7 @@ func _on_duration_bonus_timer_timeout():
 	$BonusPickMusic.stop()
 	$Music.stream_paused = false
 	$MobTimer.wait_time = GlobalVar.mob_wait_time_global
+	Signals.emit_signal("asteroid_sprite")
 	GlobalVar.Sprite_name = "Asteroid"
 	
 func _bonus_spawn_location(size_x, size_y):
@@ -212,7 +214,7 @@ func _on_CoinTimer_timeout():
 	coin.position = coin_spawn_location.global_position
 	coin.rotation = direction
 	var velocity = Vector2(rand_range(150.0, 250.0), 0.0)
-	coin.linear_velocity = velocity.rotated(direction)
+	coin.velocity = velocity.rotated(direction)
 	add_child(coin)
 
 
@@ -236,3 +238,7 @@ func _on_AfterBossCoinStorm_timeout():
 		$BossTimer2.start()
 	elif (GlobalVar.Number_of_Boss_flag == 2):
 		$BossTimer1.start()
+
+
+func _on_Player_coin_magnit():
+	pass # Replace with function body.

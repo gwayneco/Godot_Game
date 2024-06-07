@@ -5,7 +5,8 @@ signal bonus_pick_up
 signal dog_damage
 signal coin_up
 
-var speed = 400
+
+var speed = 450
 var screen_size
 
 # Called when the node enters the scene tree for the first time.
@@ -18,6 +19,7 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+	$CoinCollector/CoinMagnitCollision.disabled = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -38,6 +40,7 @@ func _on_body_entered(body):
 		hide()
 		emit_signal("hit")
 		$CollisionShape2D.set_deferred("disabled", true)
+		$CoinCollector/CoinMagnitCollision.set_deferred("disabled", true)
 		$AnimatedSprite.stop()
 	elif body.is_in_group("bonus"):
 		emit_signal("bonus_pick_up")
@@ -46,3 +49,8 @@ func _on_body_entered(body):
 	elif body.is_in_group("coin"):
 		body.queue_free()
 		emit_signal("coin_up")
+
+
+func _on_CoinCollector_body_entered(body):
+	if body.is_in_group("coin"):
+		body.emit_signal("coin_magnit")

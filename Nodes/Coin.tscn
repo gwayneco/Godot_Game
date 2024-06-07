@@ -75,9 +75,8 @@ animations = [ {
 radius = 11.0
 height = 0.0
 
-[node name="Coin" type="RigidBody2D" groups=["coin"]]
+[node name="Coin" type="KinematicBody2D" groups=["coin"]]
 collision_layer = 32
-gravity_scale = 0.0
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -87,3 +86,5 @@ frames = SubResource( 33 )
 shape = SubResource( 17 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[connection signal="coin_magnit" from="." to="." method="_on_Coin_coin_magnit"]

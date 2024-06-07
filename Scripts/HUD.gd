@@ -12,7 +12,10 @@ func _ready():
 	$Tutorial/CollectLapka/KillBosesAnimation.play("default")
 	device = OS.get_model_name()
 	$"Virtual joystick".hide()
-	$Message.hide()
+	$GameOver.hide()
+	$LangSelector.show()
+	$Tutorial.hide()
+	$StartButton.hide()
 
 func _process(delta):
 	if (Input.is_action_pressed("ui_accept")):
@@ -21,14 +24,9 @@ func _process(delta):
 		$Tutorial.hide()
 #	print(get_viewport().get_mouse_position())
 
-func show_message(text):
-	$Message.text = text
-	$Message.show()
-	$MessageTimer.start()
-
 func show_game_over():
-	show_message("Game Over")
-	$Message.show()
+	$GameOver.show()
+	$MessageTimer.start()
 	# Make a one-shot timer and wait for it to finish.
 	$StartButton.show()
 	if (get_tree().root.get_child(0).has_node('res://joystick/virtual_joystick.tscn')):
@@ -43,7 +41,7 @@ func _on_StartButton_pressed():
 	$Tutorial/CoinsTutorial/CollectCoinsAnimation.stop()
 	$Tutorial/BossTutorial/KillBosesAnimation.stop()
 	$Tutorial/CollectLapka/KillBosesAnimation.stop()
-	$Message.hide()
+	$GameOver.hide()
 	$StartButton.hide()
 	$Tutorial.hide()
 	if (device != "GenericDevice"):
@@ -56,10 +54,21 @@ func _on_StartButton_pressed():
 
 func _on_MessageTimer_timeout():
 	$MessageTimer.stop()
-	$Message.hide()
+	$GameOver.hide()
 	$Tutorial.show()
 	$Tutorial/AsteroidTutorial/EscapeAsteroidsAnimation.play("default")
 	$Tutorial/CoinsTutorial/CollectCoinsAnimation.play("default")
 	$Tutorial/BossTutorial/KillBosesAnimation.play("default")
 	$Tutorial/CollectLapka/KillBosesAnimation.play("default")
 
+func _on_SelectEnglish_pressed():
+	$Tutorial.show()
+	$StartButton.show()
+	$LangSelector.hide()
+	TranslationServer.set_locale("en")
+
+func _on_SelectRussian_pressed():
+	$Tutorial.show()
+	$StartButton.show()
+	$LangSelector.hide()
+	TranslationServer.set_locale("ru")
