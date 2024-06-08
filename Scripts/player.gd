@@ -6,7 +6,7 @@ signal dog_damage
 signal coin_up
 
 
-var speed = 450
+var speed = 550
 var screen_size
 
 # Called when the node enters the scene tree for the first time.

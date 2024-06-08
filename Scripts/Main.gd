@@ -132,6 +132,7 @@ func _on_boss_timer_1_timeout():
 	$BonusPickMusic.stop()
 	$DurationBonusTimer.stop()
 	get_tree().call_group("bonus", "queue_free")
+	Signals.emit_signal("boss_entered_leave_mobs")
 
 func _boss1_entired():
 	Boss = Boss_scene1.instance()
@@ -151,6 +152,7 @@ func _on_BossTimer2_timeout():
 	$BonusPickMusic.stop()
 	$DurationBonusTimer.stop()
 	get_tree().call_group("bonus", "queue_free")
+	Signals.emit_signal("boss_entered_leave_mobs")
 	
 func _boss2_entired():
 	Boss = Boss_scene2.instance()
@@ -198,6 +200,7 @@ func _on_lapka_damage_boss_timer_timeout():
 # Функция для продолжения игры, после убийства босса
 func _resume_game_after_boss():
 	GlobalVar.Sprite_name = "Asteroid"
+	Signals.emit_signal("boss_killed_return_mobs")
 	$AfterBossCoinStorm.start()
 	$CoinTimer.start()
 	$CoinTimer.wait_time = 0.1
@@ -239,6 +242,3 @@ func _on_AfterBossCoinStorm_timeout():
 	elif (GlobalVar.Number_of_Boss_flag == 2):
 		$BossTimer1.start()
 
-
-func _on_Player_coin_magnit():
-	pass # Replace with function body.

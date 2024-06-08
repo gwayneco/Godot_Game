@@ -30,6 +30,7 @@ position = Vector2( 0, 192 )
 [node name="DirectionChangeTimer" type="Timer" parent="BossPath"]
 
 [node name="FireTimer" type="Timer" parent="BossPath"]
+wait_time = 1.5
 
 [node name="Marker2D" type="Position2D" parent="BossPath"]
 

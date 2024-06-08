@@ -22,16 +22,14 @@ func _process(delta):
 		$StartButton.hide()
 		emit_signal("start_game")
 		$Tutorial.hide()
-#	print(get_viewport().get_mouse_position())
 
 func show_game_over():
 	$GameOver.show()
 	$MessageTimer.start()
-	# Make a one-shot timer and wait for it to finish.
 	$StartButton.show()
-	if (get_tree().root.get_child(0).has_node('res://joystick/virtual_joystick.tscn')):
-		$"Virtual joystick".hide()
-
+	if (device != "GenericDevice"):
+		if ($"Virtual joystick".is_inside_tree()):
+			$"Virtual joystick".hide()
 
 func update_score(score):
 	$ScoreLabel.text = str(score)
@@ -45,12 +43,12 @@ func _on_StartButton_pressed():
 	$StartButton.hide()
 	$Tutorial.hide()
 	if (device != "GenericDevice"):
+		$"Virtual joystick".rect_position = Vector2(86,833)
 		$"Virtual joystick".show()
-	elif (device == "GenericDevice" and get_tree().root.get_child(0).has_node('res://joystick/virtual_joystick.tscn')):
+	elif (device == "GenericDevice" and has_node("Virtual joystick")):
 		$"Virtual joystick".queue_free()
 	emit_signal("start_game")
 	$MessageTimer.stop()
-		
 
 func _on_MessageTimer_timeout():
 	$MessageTimer.stop()
@@ -60,7 +58,7 @@ func _on_MessageTimer_timeout():
 	$Tutorial/CoinsTutorial/CollectCoinsAnimation.play("default")
 	$Tutorial/BossTutorial/KillBosesAnimation.play("default")
 	$Tutorial/CollectLapka/KillBosesAnimation.play("default")
-
+	
 func _on_SelectEnglish_pressed():
 	$Tutorial.show()
 	$StartButton.show()
