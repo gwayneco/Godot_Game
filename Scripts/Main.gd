@@ -6,21 +6,27 @@ export var Boss_scene1: PackedScene
 export var Boss_scene2: PackedScene
 export var lapka_scene: PackedScene
 export var coin_scene: PackedScene
+var toggleMusicCallback = JavaScript.create_callback(self,"toggleMusic") # Ставит игру на паузу при сворачивании браузера и окна браузера
 
 var Boss
-var score
+var score_local
 var flag = 1
 
 
 func _ready():
 	$Player.hide()
+	JavaScript.get_interface('window').addEventListener('visibilitychange',toggleMusicCallback)
 	Signals.connect("boss1_died", self, "_resume_game_after_boss")
+	Signals.connect("from_hud_gameover", self, "game_over")
 	$MainMenuMusic.play()
-	
+	randomize()
 
-func _process(delta):
-	GlobalVar.PlayerPosition = $Player.position
-
+func toggleMusic(event): # Ставит игру на паузу при сворачивании браузера и окна браузера
+	var visibility = JavaScript.get_interface('document').visibilityState
+	if visibility=='hidden':
+		get_tree().paused=true
+	elif visibility=='visible':
+		get_tree().paused=false
 
 func game_over():
 	get_tree().call_group("service", "queue_free")
@@ -29,10 +35,10 @@ func game_over():
 	get_tree().call_group("bonus", "queue_free")
 	$SpeedSpawnMobsTimer.stop()
 	$MobTimer.stop()
+	$MobTimer.stop()
 	$SpawnBonusTimer.stop()
-	$HUD.show_game_over()
 	$Music.stop()
-	$DeathSound.play()
+#	$DeathSound.play() Перенесено в hud.last_chance()
 	$BossMusic1.stop()
 	$LapkaDamageBossTimer.stop()
 	$BossTimer1.stop()
@@ -42,14 +48,35 @@ func game_over():
 	$DurationBonusTimer.stop()
 	$MainMenuMusic.play()
 	$Hearts.hide()
-	
+	$BonusPickMusic.stop()
+#	if Bridge.platform.id == "yandex":
+
+
+func _on_HUD_set_score_to_leaderboard():
+	var get_score_options = Bridge.GetScoreYandexOptions.new("CatsLeaderboard2")
+	Bridge.leaderboard.get_score(get_score_options, funcref(self, "_on_get_score_completed"))
+
+func _on_set_score_completed(success):
+	pass
+
+
+func _on_get_score_completed(success, score):
+	if (score < score_local):
+		var set_score_options = Bridge.SetScoreYandexOptions.new(score_local, "CatsLeaderboard2")
+		Bridge.leaderboard.set_score(set_score_options, funcref(self, "_on_set_score_completed"))
+
+
+func _on_Player_hit():
+	$HUD.last_chance()
+
+
 func new_game():
 	GlobalVar.Sprite_name = "Asteroid"
 	get_tree().call_group("mobs", "queue_free")
-	score = 0
+	score_local = 0
 	$Player.start($StartPosition.position)
 	$BossTimer1.start()
-	$HUD.update_score(score)
+	$HUD.update_score(score_local)
 	$Music.play()
 	$MobTimer.start()
 	$SpeedSpawnMobsTimer.start()
@@ -58,6 +85,7 @@ func new_game():
 	$MobTimer.wait_time = 2
 	GlobalVar.Number_of_Boss_flag = 1
 	$MainMenuMusic.stop()
+	Bridge.advertisement.show_banner()
 	
 	# Здесь, как тест, потом перенести в функцию вознаграждения после убийства босса1 _on_AfterBossCoinStorm_timeout
 #	$BossTimer2.start()
@@ -133,6 +161,7 @@ func _on_boss_timer_1_timeout():
 	$DurationBonusTimer.stop()
 	get_tree().call_group("bonus", "queue_free")
 	Signals.emit_signal("boss_entered_leave_mobs")
+	$TimerShowBanner.start()
 
 func _boss1_entired():
 	Boss = Boss_scene1.instance()
@@ -146,6 +175,7 @@ func _boss1_entired():
 	$LapkaDamageBossTimer.start()
 	$CoinTimer.stop()
 	
+	
 func _on_BossTimer2_timeout():
 	_boss2_entired()
 	$BossTimer2.stop()
@@ -153,6 +183,7 @@ func _on_BossTimer2_timeout():
 	$DurationBonusTimer.stop()
 	get_tree().call_group("bonus", "queue_free")
 	Signals.emit_signal("boss_entered_leave_mobs")
+	$TimerShowBanner.start()
 	
 func _boss2_entired():
 	Boss = Boss_scene2.instance()
@@ -183,7 +214,7 @@ func _on_player_dog_damage():
 		if (GlobalVar.BossLifes2 == 0):
 			$BossMusic1.stop()
 			$LapkaDamageBossTimer.stop()
-		
+
 
 func _on_lapka_damage_boss_timer_timeout():
 	var lapka = lapka_scene.instance()
@@ -223,10 +254,10 @@ func _on_CoinTimer_timeout():
 
 func _on_Player_coin_up():
 	$CoinSound.play()
-	score += 1
-	$HUD.update_score(score)
-	
-	
+	score_local += 1
+	$HUD.update_score(score_local)
+
+
 # Поток монет после смерти босса
 func _on_AfterBossCoinStorm_timeout():
 	$Music.play()
@@ -241,4 +272,11 @@ func _on_AfterBossCoinStorm_timeout():
 		$BossTimer2.start()
 	elif (GlobalVar.Number_of_Boss_flag == 2):
 		$BossTimer1.start()
+
+
+func _on_TimerShowBanner_timeout():
+	$TimerShowBanner.stop()
+	Signals.emit_signal("show_banner")
+
+
 

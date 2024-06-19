@@ -14,7 +14,7 @@ dest_files=[ "res://.import/boss2_reservd9.png-2d59a3818570f1fe302440f33d561749.
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

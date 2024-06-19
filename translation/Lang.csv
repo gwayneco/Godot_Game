@@ -7,3 +7,8 @@ Instruction3,Сражайся с боссами,Fight the bosses
 Instruction4,Наноси урон,Deals damage
 GameOver,Вы проиграли,Game Over
 Pause,Игра на паузе,The game is on pause
+WarningText, Реклама через:,The ad is displayed
+ReturnLife,Возродиться за просмотр рекламы,To be reborn for watching ads
+ReturnMenu,Попробовать снова,Try again
+ErrorAdShow,Реклама не просмотрена,The ad has not been viewed
+CloseButton,Закрыть,Close

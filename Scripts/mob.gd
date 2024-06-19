@@ -20,7 +20,7 @@ func _ready():
 	Signals.connect("boss_killed_return_mobs",self,"_boss_killed")
 
 func _process(delta):
-	velocity = Vector2(10090, 0.0) * GlobalVar.mob_speed_var * speed_multiplier
+	velocity = Vector2(12090, 0.0) * GlobalVar.mob_speed_var * speed_multiplier
 	linear_velocity = velocity.rotated(direction) * delta
 	$Sprite.rotation += 0.01
 	$CollisionShape2D.rotation += 0.01

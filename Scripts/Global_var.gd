@@ -10,3 +10,4 @@ var BossLifes2 = 3
 var Sprite_name = "Asteroid" # Какой спрайт сейчас на врагах
 var mob_wait_time_global = 2
 var Number_of_Boss_flag = 1
+var flag_pause_dont_work = true
