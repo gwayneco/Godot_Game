@@ -1,8 +1,6 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/Hud.gd" type="Script" id=1]
-[ext_resource path="res://fonts/8bitwonderrusbylyajka_nominal.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://fonts/8bitOperatorPlus8-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://art/For Cat tutorial/Escape Asteroids/escape asteroids1.png" type="Texture" id=4]
 [ext_resource path="res://art/For Cat tutorial/Escape Asteroids/escape asteroids2.png" type="Texture" id=5]
 [ext_resource path="res://art/For Cat tutorial/Escape Asteroids/escape asteroids3.png" type="Texture" id=6]
@@ -21,18 +19,19 @@
 [ext_resource path="res://Scripts/BannerWarning.gd" type="Script" id=19]
 [ext_resource path="res://art/Ad_sprite.png" type="Texture" id=20]
 [ext_resource path="res://art/gameover.wav" type="AudioStream" id=21]
+[ext_resource path="res://fonts/EpilepsySansBold.ttf" type="DynamicFontData" id=22]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
-font_data = ExtResource( 3 )
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 50
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 32
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -43,7 +42,8 @@ animations = [ {
 } ]
 
 [sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 2 )
+size = 40
+font_data = ExtResource( 22 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
@@ -70,36 +70,36 @@ animations = [ {
 } ]
 
 [sub_resource type="DynamicFont" id=10]
-size = 48
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=11]
 size = 64
-font_data = ExtResource( 2 )
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=12]
 size = 64
-font_data = ExtResource( 2 )
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=13]
-size = 48
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=15]
-size = 48
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=14]
-size = 32
-font_data = ExtResource( 2 )
+size = 48
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=16]
-size = 48
-font_data = ExtResource( 2 )
+size = 64
+font_data = ExtResource( 22 )
 
 [sub_resource type="DynamicFont" id=17]
 size = 48
-font_data = ExtResource( 2 )
+font_data = ExtResource( 22 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -113,12 +113,14 @@ margin_bottom = 1033.0
 [node name="ScoreLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -18.0
+margin_left = -192.0
 margin_top = 24.0
-margin_right = 18.0
-margin_bottom = 67.0
+margin_right = 192.0
+margin_bottom = 85.0
 custom_fonts/font = SubResource( 1 )
 text = "0"
+align = 1
+valign = 1
 
 [node name="StartButton" type="Button" parent="."]
 anchor_left = 0.5
@@ -152,15 +154,15 @@ valign = 1
 [node name="AsteroidTutorial" type="Node" parent="Tutorial"]
 
 [node name="EscapeAsteroidsAnimation" type="AnimatedSprite" parent="Tutorial/AsteroidTutorial"]
-position = Vector2( 424, 300 )
+position = Vector2( 464, 348 )
 frames = SubResource( 4 )
 offset = Vector2( -93, 60 )
 
 [node name="EscapeAsteroids2" type="Label" parent="Tutorial/AsteroidTutorial"]
-margin_left = 72.0
-margin_top = 136.0
-margin_right = 602.0
-margin_bottom = 181.0
+margin_left = 112.0
+margin_top = 168.0
+margin_right = 642.0
+margin_bottom = 232.0
 rect_pivot_offset = Vector2( 360, 148 )
 custom_fonts/font = SubResource( 5 )
 text = "Instruction1"
@@ -170,10 +172,10 @@ valign = 1
 [node name="CoinsTutorial" type="Node" parent="Tutorial"]
 
 [node name="CollectCoins2" type="Label" parent="Tutorial/CoinsTutorial"]
-margin_left = 1323.0
-margin_top = 136.0
-margin_right = 1853.0
-margin_bottom = 181.0
+margin_left = 1192.0
+margin_top = 168.0
+margin_right = 1880.0
+margin_bottom = 232.0
 rect_pivot_offset = Vector2( 360, 148 )
 custom_fonts/font = SubResource( 5 )
 text = "Instruction2"
@@ -181,20 +183,20 @@ align = 1
 valign = 1
 
 [node name="CollectCoinsAnimation" type="AnimatedSprite" parent="Tutorial/CoinsTutorial"]
-position = Vector2( 1587, 359 )
+position = Vector2( 1547, 407 )
 frames = SubResource( 6 )
 
 [node name="BossTutorial" type="Node" parent="Tutorial"]
 
 [node name="KillBosesAnimation" type="AnimatedSprite" parent="Tutorial/BossTutorial"]
-position = Vector2( 331, 856 )
+position = Vector2( 371, 856 )
 frames = SubResource( 7 )
 
 [node name="KillBoses2" type="Label" parent="Tutorial/BossTutorial"]
-margin_left = 67.0
-margin_top = 624.0
-margin_right = 597.0
-margin_bottom = 669.0
+margin_left = 107.0
+margin_top = 616.0
+margin_right = 637.0
+margin_bottom = 680.0
 rect_pivot_offset = Vector2( 360, 148 )
 custom_fonts/font = SubResource( 5 )
 text = "Instruction3"
@@ -204,10 +206,10 @@ valign = 1
 [node name="CollectLapka" type="Node" parent="Tutorial"]
 
 [node name="KillBoses2" type="Label" parent="Tutorial/CollectLapka"]
-margin_left = 1323.0
+margin_left = 1283.0
 margin_top = 616.0
-margin_right = 1853.0
-margin_bottom = 661.0
+margin_right = 1813.0
+margin_bottom = 680.0
 rect_pivot_offset = Vector2( 360, 148 )
 custom_fonts/font = SubResource( 5 )
 text = "Instruction4"
@@ -215,7 +217,7 @@ align = 1
 valign = 1
 
 [node name="KillBosesAnimation" type="AnimatedSprite" parent="Tutorial/CollectLapka"]
-position = Vector2( 1587, 856 )
+position = Vector2( 1547, 856 )
 frames = SubResource( 8 )
 
 [node name="PauseLayer" type="CanvasLayer" parent="."]
@@ -239,9 +241,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -512.0
-margin_top = -204.0
+margin_top = -228.0
 margin_right = 512.0
-margin_bottom = -156.0
+margin_bottom = -139.0
 custom_fonts/font = SubResource( 10 )
 text = "Pause"
 align = 1
@@ -335,9 +337,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -576.0
-margin_top = -332.0
+margin_top = -340.0
 margin_right = 576.0
-margin_bottom = -284.0
+margin_bottom = -252.0
 custom_fonts/font = SubResource( 15 )
 text = "GameOver"
 align = 1
@@ -352,10 +354,10 @@ custom_fonts/font = SubResource( 14 )
 text = "ReturnLife"
 
 [node name="ReturnMenu" type="Button" parent="GameOverDisplay"]
-margin_left = 624.0
+margin_left = 448.0
 margin_top = 632.0
-margin_right = 1327.0
-margin_bottom = 670.0
+margin_right = 1536.0
+margin_bottom = 687.0
 custom_fonts/font = SubResource( 14 )
 text = "ReturnMenu"
 

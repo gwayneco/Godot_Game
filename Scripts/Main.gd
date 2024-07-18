@@ -47,7 +47,6 @@ func game_over():
 	$CoinTimer.stop()
 	$DurationBonusTimer.stop()
 	$MainMenuMusic.play()
-	$Hearts.hide()
 	$BonusPickMusic.stop()
 #	if Bridge.platform.id == "yandex":
 

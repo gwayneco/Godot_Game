@@ -11,7 +11,7 @@ func _ready():
 	$AnimatedSprite.visible = false
 	$AnimatedSprite.modulate.a8 = 90
 	$AnimatedSprite.frame = 0
-
+	Signals.connect("from_hud_gameover", self, "hide_hearts")
 
 func _on_Player_dog_damage():
 	if (GlobalVar.Number_of_Boss_flag == 1):
@@ -38,3 +38,6 @@ func _on_HUD_start_game():
 	$AnimatedSprite.visible = false
 	$AnimatedSprite.modulate.a8 = 90
 	$AnimatedSprite.frame = 0
+
+func hide_hearts():
+	$AnimatedSprite.visible = false
