@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/cat_do_damage.mp3-462b6df365add81ace561d05b3c67a59.mp3str"
+
+[deps]
+
+source_file="res://art/cat_do_damage.mp3"
+dest_files=[ "res://.import/cat_do_damage.mp3-462b6df365add81ace561d05b3c67a59.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
